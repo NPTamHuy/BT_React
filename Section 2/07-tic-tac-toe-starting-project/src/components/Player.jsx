@@ -1,19 +1,25 @@
 import { useState } from 'react';
 
-export default function Player({ name, symbol }) {
+export default function Player({ initialName, symbol }) {
   const [isEditing, setEditing] = useState(false);
+  const [name, setName] = useState(initialName);
 
   function handleEditClick() {
     setEditing((prevEditing) => !prevEditing);
   }
-  let playerName = <span className="player-name">{name}</span>;
+  function handleChange(event) {
+    setName(event.target.value);
+  }
+  let editablePlayerName = <span className="player-name">{name}</span>;
   if (isEditing) {
-    playerName = <input type="text" required value={name} />;
+    editablePlayerName = (
+      <input type="text" required value={name} onChange={handleChange} />
+    );
   }
   return (
     <li>
       <span className="player">
-        {playerName}
+        {editablePlayerName}
         <span className="player-symbol">{symbol}</span>
       </span>
       <button onClick={handleEditClick}>{isEditing ? 'Save' : 'Edit'}</button>

@@ -9,8 +9,10 @@ function App() {
 
   function handleSelectSquare(rowIndex, colIndex) {
     setActivePlayer((curActivePlayer) => (curActivePlayer === 'X' ? 'O' : 'X'));
+
     setGameTurns((prevGameTurns) => {
       let currentPlayer = 'X';
+
       if (prevGameTurns.length > 0 && prevGameTurns[0] === 'X') {
         currentPlayer = 'O';
       }
@@ -19,8 +21,10 @@ function App() {
           square: { row: rowIndex, col: colIndex },
           player: currentPlayer,
         },
+
         ...prevGameTurns,
       ];
+
       return updatedTurns;
     });
   }
@@ -40,10 +44,7 @@ function App() {
             isActive={activePlayer === 'O'}
           />
         </ol>
-        <GameBoard
-          onSelectSquare={handleSelectSquare}
-          activePlayerSymbol={activePlayer}
-        />
+        <GameBoard onSelectSquare={handleSelectSquare} turns={gameTurns} />
         <Log />
       </div>
     </main>

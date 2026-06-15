@@ -3,6 +3,7 @@ import { useState } from 'react';
 import GameBoard from './components/GameBoard';
 import Player from './components/Player';
 import Log from './components/Log';
+import GameOver from './components/GameOver';
 
 import { WINNING_COMBINATIONS } from './winning-combinations';
 
@@ -23,11 +24,16 @@ function deriveActivePlayer(gameTurns) {
 }
 
 function App() {
+  const [players, sePlayers] = useState({
+    X: 'Player 1',
+    Y: 'Player 2',
+  });
   const [gameTurns, setGameTurns] = useState([]);
 
   const activePlayer = deriveActivePlayer(gameTurns);
 
-  let gameBoard = initialGameBoard;
+  // Dùng map() kết hợp toán tử Spread (...) để sao chép sâu mảng 2 chiều
+  let gameBoard = [...initialGameBoard.map((array) => [...array])];
 
   for (const turn of gameTurns) {
     const { square, player } = turn;
@@ -54,6 +60,9 @@ function App() {
       winner = firstSquareSymbol;
     }
   }
+
+  const hasDraw = gameTurns.length === 9 && !winner;
+
   function handleSelectSquare(rowIndex, colIndex) {
     setGameTurns((prevTurns) => {
       const currentPlayer = deriveActivePlayer(prevTurns);
@@ -68,6 +77,19 @@ function App() {
 
       return updatedTurns;
     });
+  }
+
+  function handleRestart() {
+    setGameTurns([]);
+  }
+
+  function handlePlayerNameChange(name, symbol) {
+    setPlayers(prevPlayer => {
+      return {
+        ...prevPlayer,
+        [symbol],
+      }
+    })
   }
 
   return (
@@ -85,7 +107,9 @@ function App() {
             isActive={activePlayer === 'O'}
           />
         </ol>
-        {winner && <p>You won, {winner}!</p>}
+        {(winner || hasDraw) && (
+          <GameOver winner={winner} onRestart={handleRestart} />
+        )}
         <GameBoard onSelectSquare={handleSelectSquare} board={gameBoard} />
       </div>
       <Log turns={gameTurns} />

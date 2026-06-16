@@ -9,7 +9,7 @@ export default function UserInput({ onChange, userInput }) {
             required
             value={userInput.initialInvestment}
             onChange={(event) =>
-              handleChange('initialInvestment', event.target.value)
+              onChange('initialInvestment', event.target.value)
             }
           />
         </p>

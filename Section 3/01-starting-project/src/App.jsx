@@ -11,6 +11,8 @@ export default function App() {
     duration: 10,
   });
 
+  const inputIsValid = userInput.duration >= 1;
+
   function handleChange(inputIdentifier, newValue) {
     setUserInput((prevUserInput) => {
       return {
@@ -26,7 +28,8 @@ export default function App() {
       {/* Truyền cả State và Hàm xử lý xuống cho UserInput */}
       <UserInput userInput={userInput} onChange={handleChange} />
       {/* Chia sẻ State này cho cả Results để chuẩn bị tính toán */}
-      <Results input={userInput} />
+      {!inputIsValid && <p className="center">Please enter valid input data</p>}
+      {inputIsValid && <Results input={userInput} />}
     </>
   );
 }

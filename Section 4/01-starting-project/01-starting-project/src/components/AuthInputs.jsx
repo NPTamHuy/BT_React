@@ -27,12 +27,12 @@ export default function AuthInputs() {
     <div
       className="
         w-full
-        max-w-[28rem]
+        max-w-md
         p-8
         mx-auto
         rounded-lg
         shadow-md
-        bg-gradient-to-b
+        bg-linear-to-b
         from-[#474232]
         to-[#28271c]
         text-white

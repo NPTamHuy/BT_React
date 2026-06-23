@@ -19,7 +19,6 @@ export default function Header() {
           uppercase
           tracking-[0.4em]
           text-[#9a3412]
-          font-['Pacifico']
         "
       >
         ReactArt
